@@ -1,5 +1,6 @@
 <?php 
     require_once("../includes/functions.php");
+    require_once("../includes/db/connection.php");
     session_start(); 
     if(!isset($_SESSION["username"])){
         redirect_to("login.php");
@@ -45,6 +46,53 @@
                 </div>
             </div>
         </nav>
+    </div>
+    <div class="container">
+        <div class="container d-flex justify-content-between my-3">
+            <h4 class="">Manage All Posts</h4>
+            <a href="add_new_post.php" class="btn btn-primary d-block ">Add New Post</a>
+        </div>
+
+        <?php  
+            $query = "SELECT * FROM posts";
+            $posts = mysqli_query($connection, $query);
+            if(!$posts){
+                die("Query failed.");
+            }
+        ?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Post ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Thumbnail</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php  
+                    while($post = mysqli_fetch_assoc($posts)){?>
+                <tr>
+                    <td><?php echo $post["id"]; ?></td>
+                    <td><?php echo $post["title"]; ?></td>
+                    <td><img src="../includes/images/<?php echo $post["image"];?>" width="100" alt=""></td>
+                    <td><?php  echo substr_replace($post["content"], "...", 50) ; ?></td>
+                    <td><?php  echo $post["author"]; ?></td>
+                    <td><?php  echo $post["date"]; ?></td>
+                    <td>
+                        <a class="btn btn-primary mx-2" href="#">EDIT</a>
+                        <a class="btn btn-danger" href="#">Delete</a>
+                    </td>
+                </tr>
+                <?php
+
+                    }
+                ?>
+            </tbody>
+        </table>
     </div>
 
 </body>
