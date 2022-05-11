@@ -60,6 +60,14 @@
             ?>
         </p>
         <?php endif; ?>
+        <?php if(isset($_SESSION["message"])): ?>
+        <p class="alert alert-success">
+            <?php 
+                echo $_SESSION["message"]; 
+                $_SESSION["message"] = null;
+            ?>
+        </p>
+        <?php endif; ?>
         <?php  
             $query = "SELECT * FROM posts";
             $posts = mysqli_query($connection, $query);
@@ -90,7 +98,7 @@
                     <td><?php  echo $post["author"]; ?></td>
                     <td><?php  echo $post["date"]; ?></td>
                     <td>
-                        <a class="btn btn-primary mx-2" href="#">EDIT</a>
+                        <a class="btn btn-primary mx-2" href="update_post.php?id=<?php echo $post["id"];?>">EDIT</a>
                         <a class="btn btn-danger" href="delete_post.php?id=<?php echo $post["id"];?>">Delete</a>
                     </td>
                 </tr>
