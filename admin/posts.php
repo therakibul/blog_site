@@ -52,7 +52,14 @@
             <h4 class="">Manage All Posts</h4>
             <a href="add_new_post.php" class="btn btn-primary d-block ">Add New Post</a>
         </div>
-
+        <?php if(isset($_SESSION["delete"])): ?>
+        <p class="alert alert-success">
+            <?php 
+                echo $_SESSION["delete"]; 
+                $_SESSION["delete"] = null;
+            ?>
+        </p>
+        <?php endif; ?>
         <?php  
             $query = "SELECT * FROM posts";
             $posts = mysqli_query($connection, $query);
@@ -84,7 +91,7 @@
                     <td><?php  echo $post["date"]; ?></td>
                     <td>
                         <a class="btn btn-primary mx-2" href="#">EDIT</a>
-                        <a class="btn btn-danger" href="#">Delete</a>
+                        <a class="btn btn-danger" href="delete_post.php?id=<?php echo $post["id"];?>">Delete</a>
                     </td>
                 </tr>
                 <?php
