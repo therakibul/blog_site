@@ -1,7 +1,7 @@
 <?php 
+    session_start(); 
     require_once("../includes/functions.php");
     require_once("../includes/db/connection.php");
-    session_start(); 
     if(!isset($_SESSION["username"])){
         redirect_to("login.php");
     }    
